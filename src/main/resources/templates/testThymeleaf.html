@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 내부 css -->
+    <style>
+        #pId {
+            font-size: 200%;
+            color: #0000ff;
+        }
+    </style>
+
+    <!-- 내부 js -->
+    <script>
+        window.onload = function() {
+            console.log("");
+            console.log("[window onload] : [start]");
+            console.log("");
+
+            // 데이터 확인 실시
+            var data = document.getElementById("pId").innerText;
+            alert(data);
+        };
+    </script>
+
+</head>
+
+<body>
+<!-- p 태그 삽입 실시 : 일반 key : value 형태 표시 -->
+<p id = "pId">data : <span th:text="${pTag}"></span></p>
+
+<!-- p 태그 삽입 실시 : 객체 형태 데이터 가져옵니다 (model 에 포함된 변수 이름 지정) -->
+<p id = "pId" th:object="${pTag}">data : <span th:text="*{state}"></span> : <span th:text="*{message}"></span></p>
+</body>
+
+</html>

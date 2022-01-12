@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<!-- 자바스크립트 차단된 콘텐츠 자동 허용 실시 -->
+<!-- saved from url=(0013)about:internet -->
+
+<!-- 표시 언어 지정 -->
+<html lang="ko">
+
+<!-- 헤더 정의 부분 -->
+<head>
+  <title>AJAX TEST</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+  <!-- 내부 CSS 스타일 지정 -->
+  <style>
+
+    /* html, body 영역 스타일 지정 */
+    html, body{
+      width : 100%;
+      height : 100%;
+      margin : 0;
+      padding : 0;
+      border : none;
+      background-color: #c1c1c1;
+
+      /* 스크롤바 표시 지정 */
+      overflow : auto;
+    }
+
+  </style>
+
+
+  <!-- Jquery CDN 로드 : 항상 최신 버전 사용 -->
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+
+
+  <!-- 내부 JS 지정 -->
+  <script>
+
+    /*
+    [JS 요약 설명]
+    1. window.onload : 웹페이지 로드 완료 상태를 나타냅니다
+    2. sweetalert : 브라우저에서 커스텀 다이얼로그 팝업창을 사용할 수 있습니다
+    */
+
+
+
+    /* [html 최초 로드 및 이벤트 상시 대기 실시] */
+    window.onload = function() {
+      console.log("");
+      console.log("[window onload] : [start]");
+      console.log("");
+
+      // [get 요청 실시]
+      //requestGet();
+
+      // [post 요청 실시]
+      requestPost();
+    };
+
+
+    /* 이벤트 함수 정의 */
+    function requestGet(){
+      var urlData = "http://localhost:7000/date";
+      var contentData = "userId=1&id=1";
+      console.log("");
+      console.log("[requestGet] : [start]");
+      console.log("[request url] : " + urlData);
+      //console.log("[request data] : " + contentData);
+      //console.log("[request format] : " + urlData+"?"+contentData);
+      console.log("[request method] : " + "GET");
+      console.log("");
+
+      $.ajax({
+        /* 요청 시작 부분 */
+        url: urlData, //주소
+        /*data: { //전송 데이터
+          "userId" : 1,
+          "id" : 1
+        },*/
+        type: "GET", //전송 타입
+        async: true, //비동기 여부
+        dataType: "TEXT", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML)
+
+        /* 응답 확인 부분 */
+        success: function(response) {
+          console.log("");
+          console.log("[requestGet] : [result]");
+          console.log("[response] : " + response);
+          console.log("");
+        },
+
+        /* 에러 확인 부분 */
+        error: function(xhr) {
+          console.log("");
+          console.log("[requestGet] : [result]");
+          console.log("[error] : " + xhr);
+          console.log("");
+        },
+
+        /* 완료 확인 부분 */
+        complete:function(data,textStatus) {
+          console.log("");
+          console.log("[requestGet] : [result]");
+          console.log("[complete] : " + textStatus);
+          console.log("");
+        }
+      });
+    };
+
+
+
+    /* 이벤트 함수 정의 */
+    function requestPost(){
+      var urlData = "http://localhost:7000/insertUser";
+      var contentData = "idx=65&name=twok&sex=m&age=28&dept=개발부&phone=01012345678&addr=서울&rank=연구원&marri=x&familly=5&hobby=코딩";
+      console.log("");
+      console.log("[requestPost] : [start]");
+      console.log("[request url] : " + urlData);
+      console.log("[request data] : " + contentData);
+      console.log("[request format] : " + urlData+"?"+contentData);
+      console.log("[request method] : " + "POST");
+      console.log("");
+
+      $.ajax({
+        /* 요청 시작 부분 */
+        url: urlData + "?" + $.param ({"idx":"1", "name":"twok", "sex":"m", "age":"28",
+                                        "dept":"개발부", "phone":"010588849999", "addr":"서울",
+                                        "rank":"연구원", "marri":"x", "familly":"5", "hobby":"코딩"}), //주소
+        type: "POST", //전송 타입
+        async: true, //비동기 여부
+        //timeout: 3000, //타임 아웃 설정
+        dataType: "TEXT", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML)
+        contentType: "application/x-www-form-urlencoded; charset=utf-8", //헤더의 Content-Type을 설정
+
+        /* 응답 확인 부분 */
+        success: function(response) {
+          console.log("");
+          console.log("[requestPost] : [result]");
+          console.log("[response] : " + response);
+          console.log("");
+        },
+
+        /* 에러 확인 부분 */
+        error: function(xhr) {
+          console.log("");
+          console.log("[requestPost] : [result]");
+          console.log("[error] : " + xhr);
+          console.log("");
+        },
+
+        /* 완료 확인 부분 */
+        complete:function(data,textStatus) {
+          console.log("");
+          console.log("[requestPost] : [result]");
+          console.log("[complete] : " + textStatus);
+          console.log("");
+        }
+      });
+    };
+
+
+    /* 이벤트 함수 정의 */
+    function requestPostBodyJson(){
+      console.log("[requestPostBodyJson] : [start]");
+      console.log("");
+
+      console.log("[request url] : " + "http://jsonplaceholder.typicode.com/posts");
+      console.log("[request data] : " + "{ userId:1, id:1 }");
+      console.log("[request method] : " + "POST BODY JSON");
+      console.log("");
+
+      $.ajax({
+        /* 요청 시작 부분 */
+        url: "http://jsonplaceholder.typicode.com/posts", //주소
+        data: { //전송 데이터
+          "userId" : 1,
+          "id" : 1
+        },
+        type: "POST", //전송 타입
+        async: true, //비동기 여부
+        timeout: 3000, //타임 아웃 설정
+        dataType: "JSON", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML)
+        contentType: "application/x-www-form-urlencoded; charset=utf-8", //헤더의 Content-Type을 설정
+
+        /* 응답 확인 부분 */
+        success: function(response) {
+          console.log("[response] : " + JSON.stringify(response));
+          console.log("");
+        },
+
+        /* 에러 확인 부분 */
+        error: function(xhr) {
+          console.log("[error] : " + xhr);
+          console.log("");
+        },
+
+        /* 완료 확인 부분 */
+        complete:function(data,textStatus) {
+          console.log("[complete] : " + textStatus);
+          console.log("");
+        }
+      });
+    };
+
+
+
+    /* [이벤트 함수 정의] */
+    function requestGetJsonP(){
+      console.log("");
+      console.log("[requestGetJsonP] : [start]");
+      console.log("");
+
+      console.log("");
+      console.log("[request url] : " + "http://jsonplaceholder.typicode.com/posts");
+      console.log("[request data] : " + "userId=1&id=1");
+      console.log("[request type] : " + "JSONP");
+      console.log("[request format] : " + "http://jsonplaceholder.typicode.com/posts?userId=1&id=1");
+      console.log("[request method] : " + "GET");
+      console.log("");
+
+      $.ajax({
+        /* 요청 시작 부분 */
+        url: "http://jsonplaceholder.typicode.com/posts", //주소
+        data: { //전송 데이터
+          "userId" : 1,
+          "id" : 1
+        },
+        type: "GET", //전송 타입
+        async: true, //비동기 여부
+        dataType: "JSONP", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML, JSONP)
+
+        /* 응답 확인 부분 */
+        success: function(response) {
+          console.log("");
+          console.log(response); // 특정 객체 object 형식 확인
+          console.log("[response] : [id] : " + response[0].id); //필요한 데이터 추출
+          console.log("[response] : [title] : " + response[0].title); //필요한 데이터 추출
+          console.log("[response] : [userId] : " + response[0].userId); //필요한 데이터 추출
+          console.log("[response] : [body] : " + response[0].body); //필요한 데이터 추출
+          console.log("");
+        },
+
+        /* 에러 확인 부분 */
+        error: function(xhr) {
+          console.log("");
+          console.log("[error] : " + xhr);
+          console.log("");
+        },
+
+        /* 완료 확인 부분 */
+        complete:function(data, textStatus) {
+          console.log("");
+          console.log("[complete] : " + textStatus);
+          console.log("");
+        }
+      });
+    };
+
+  </script>
+
+</head>
+
+
+<body>
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper >> interface 매핑 : id 값 중요 (interface 메소드) -->
+<mapper namespace="com.project.solutionpackage.mapper.DBMapper">
+
+    <!-- select 조건 절 조회 : db 시간 조회 -->
+    <select id="date" resultType="string">
+        <![CDATA[
+        select TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+            from dual
+        ]]>
+    </select>
+
+
+    <!-- select 조건 절 조회 : 한개 값 : 동등 서브 쿼리 -->
+    <select id="userInfo" resultType="map">
+        <![CDATA[
+        select *
+            from test_user
+        where t_idx = #{idx}
+        ]]>
+    </select>
+
+
+    <!-- select 조건 절 조회 : like and 비교 연산 -->
+    <select id="userInfoList" resultType="map">
+        <![CDATA[
+        select *
+            from test_user
+        where t_dept like '%' || #{dept} || '%'
+            and t_idx >= #{idx}
+        order by to_number(t_idx) asc
+        ]]>
+    </select>
+
+
+    <!-- update 특정 조건 수정 -->
+    <update id="updateUser">
+        <![CDATA[
+        update test_user
+        set
+            t_idx = #{idx}
+        where t_name = #{name}
+        ]]>
+    </update>
+
+
+    <!-- insert 데이터 삽입 실시 -->
+    <insert id="insertUser">
+        <![CDATA[
+        insert into TEST_USER (T_IDX, T_NAME, T_SEX, T_AGE, T_DEPT, T_PHONE, T_ADDR, T_RANK, T_MARRI, T_FAMILLY, T_HOBBY)
+        values (#{idx}, #{name}, #{sex}, #{age}, #{dept}, #{phone}, #{addr}, #{rank}, #{marri}, #{familly}, #{hobby})
+        ]]>
+    </insert>
+
+
+    <!-- delete 특정 데이터 삭제 실시 -->
+    <delete id="deleteUser">
+        <![CDATA[
+        delete
+            from TEST_USER
+        where t_name = #{name}
+        ]]>
+    </delete>
+
+
+    <!-- 프로시저 호출 : input / output [msg : cursor] -->
+    <resultMap id="boardMap" type="hashmap" />
+    <select id="userProcedure" parameterType="hashmap" statementType="CALLABLE">
+        <![CDATA[
+        { call TEST_USER_PROCEDURE (
+            #{dept},
+            #{msg, mode=OUT, jdbcType=VARCHAR, javaType=string},
+            #{cur, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=boardMap}
+        )}
+        ]]>
+    </select>
+
+
+</mapper>
